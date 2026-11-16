@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#C8325F">
+<title>Cycle Diary</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F1F9;--sf:#fff;--ink:#2E1B3A;--mu:#7A6A86;--ln:#E6DCEC;--pe:#C8325F;--pt:#fff;--fe:#1F8A84;--fb:#D6EFEC;--ov:#E0A100;--ac:#5B2A7A;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17101E;--sf:#231A2E;--ink:#F1E9F7;--mu:#A898B4;--ln:#3A2D48;--pe:#E4557F;--fb:#17403F;--ov:#F0B92A;--ac:#C9A3E8;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#17101E;--sf:#231A2E;--ink:#F1E9F7;--mu:#A898B4;--ln:#3A2D48;--pe:#E4557F;--fb:#17403F;--ov:#F0B92A;--ac:#C9A3E8;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.45 Nunito,system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:84px}
+main{max-width:480px;margin:0 auto;padding:16px}
+h1{font:600 22px Fraunces,Georgia,serif;margin:0 0 14px}
+h2{font:600 18px Fraunces,Georgia,serif;margin:0 0 8px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:16px;margin-bottom:14px}
+.big{font:600 28px/1.15 Fraunces,Georgia,serif;margin:0 0 6px}
+.mu{color:var(--mu);font-size:14px;margin:0}
+.big.p{color:var(--pe)}
+.btn{font:800 15px Nunito,system-ui,sans-serif;background:var(--pe);color:#fff;border:0;border-radius:12px;padding:11px 16px;margin:8px 8px 0 0;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ln)}
+.btn:focus-visible,.chip:focus-visible,.d:focus-visible,.nav button:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+a.lnk{display:inline-block;margin-top:10px;color:var(--ac);font-weight:700;font-size:14px}
+.cal-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cal-h button{background:none;border:1px solid var(--ln);color:var(--ink);width:38px;height:38px;border-radius:10px;font-size:18px;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.wd{text-align:center;font-size:12px;color:var(--mu);padding:2px 0}
+.d{position:relative;aspect-ratio:1;border:2px solid transparent;border-radius:50%;background:none;color:var(--ink);font:600 14px Nunito,system-ui,sans-serif;cursor:pointer;padding:0}
+.d.e{visibility:hidden}
+.d.pe{background:var(--pe);color:var(--pt)}
+.d.pp{border:2px dashed var(--pe)}
+.d.fe{background:var(--fb)}
+.d.ov{border:2px solid var(--ov);background:var(--fb)}
+.d.td{box-shadow:0 0 0 2px var(--ac)}
+.d i{position:absolute;bottom:3px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--ac)}
+.d.pe i{background:#fff}
+.lg{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font-size:12px;color:var(--mu)}
+.lg span::before{content:"";display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.lg .a::before{background:var(--pe)}.lg .b::before{border:2px dashed var(--pe)}.lg .c::before{background:var(--fb)}.lg .e::before{border:2px solid var(--ov)}
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--sf);border-top:1px solid var(--ln);padding-bottom:env(safe-area-inset-bottom,0px)}
+.nav button{flex:1;background:none;border:0;padding:14px 4px;font:700 14px Nunito,system-ui,sans-serif;color:var(--mu);cursor:pointer}
+.nav button.on{color:var(--pe)}
+.view{display:none}.view.on{display:block}
+.row{display:flex;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stats div{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:10px;text-align:center}
+.stats b{display:block;font:600 24px Fraunces,Georgia,serif;color:var(--pe)}
+.stats span{font-size:12px;color:var(--mu)}
+.h{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--ln);cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;width:100%;text-align:left;color:var(--ink);font:inherit}
+.h:last-child{border-bottom:0}
+.h .bar{height:8px;border-radius:4px;background:var(--pe);opacity:.75}
+.h .t{flex:0 0 auto;min-width:118px;font-weight:700;font-size:14px}
+#bd{position:fixed;inset:0;background:rgba(20,10,30,.5);display:none;z-index:20}
+#sh{position:fixed;left:0;right:0;bottom:0;max-height:88vh;overflow:auto;background:var(--sf);border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));display:none;z-index:21;max-width:520px;margin:0 auto}
+.lb{font-weight:800;font-size:14px;margin:14px 0 6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--ln);background:none;color:var(--ink);border-radius:999px;padding:7px 13px;font:600 14px Nunito,system-ui,sans-serif;cursor:pointer}
+.chip.on{background:var(--pe);border-color:var(--pe);color:#fff}
+textarea,input[type=number],input[type=password]{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--ln);border-radius:12px;padding:10px}
+textarea{min-height:70px;resize:vertical}
+.f{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0}
+.f input{width:84px}
+#lock{position:fixed;inset:0;background:var(--bg);z-index:50;display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;text-align:center}
+#lock input{max-width:200px;text-align:center;font-size:24px;letter-spacing:8px}
+#ts{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;display:none;z-index:60;max-width:90%}
+#wr{background:#FFF3CD;color:#5c4400;border-radius:12px;padding:10px 12px;font-size:13px;margin-bottom:12px;display:none}
+@media (prefers-reduced-motion:no-preference){#sh{animation:up .18s ease-out}@keyframes up{from{transform:translateY(30px);opacity:.4}}}
+</style>
+</head>
+<body>
+<div id="lock"><h1>Cycle Diary</h1><p class="mu">4 digit PIN daalo</p><input id="pin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" aria-label="PIN"><p class="mu" id="pm"></p></div>
+<main>
+<h1>Cycle Diary</h1>
+<div id="wr">Is browser me data save nahi ho pa raha (private mode ho sakta hai). Backup zaroor lein.</div>
+
+<section class="view on" id="v0">
+<div class="card" id="st"></div>
+<div class="card">
+<div class="cal-h"><button id="pv" aria-label="Pichla mahina">‹</button><h2 id="mt" style="margin:0"></h2><button id="nx" aria-label="Agla mahina">›</button></div>
+<div class="grid" id="wk"></div><div class="grid" id="cg"></div>
+<div class="lg"><span class="a">Period</span><span class="b">Expected period</span><span class="c">Fertile window</span><span class="e">Ovulation</span></div>
+<p class="mu" style="margin-top:10px">Kisi bhi din par tap karke flow, symptoms, mood aur note likho.</p>
+</div>
+</section>
+
+<section class="view" id="v1">
+<div class="stats" id="ss"></div>
+<div class="card"><h2>Pichli cycles</h2><div id="hl"></div></div>
+</section>
+
+<section class="view" id="v2">
+<div class="card"><h2>Default values</h2>
+<p class="mu">Jab tak data kam hai, prediction inhi se hoti hai.</p>
+<label class="f">Cycle length (din)<input type="number" id="cl" min="20" max="45"></label>
+<label class="f">Period length (din)<input type="number" id="pl" min="2" max="10"></label></div>
+<div class="card"><h2>PIN lock</h2>
+<p class="mu" id="pt"></p>
+<input type="password" id="np" inputmode="numeric" maxlength="4" placeholder="Naya 4 digit PIN" aria-label="Naya PIN">
+<div class="row"><button class="btn" id="ps2">PIN set karo</button><button class="btn ghost" id="pr" style="display:none">PIN hatao</button></div></div>
+<div class="card"><h2>Backup aur restore</h2>
+<p class="mu">Data sirf is phone me hai. Browser data clear hone par chala jayega, isliye kabhi kabhi backup lein.</p>
+<div class="row"><button class="btn" id="bd1">Backup file save karo</button><button class="btn ghost" id="bc">Text copy karo</button></div>
+<p class="lb">Restore</p>
+<textarea id="bk" placeholder="Backup text yahan paste karo, ya neeche file chuno"></textarea>
+<div class="row"><button class="btn" id="rt">Text se restore</button><button class="btn ghost" id="rf">File se restore</button></div>
+<input type="file" id="fi" accept=".json,application/json,text/plain" hidden></div>
+<div class="card"><h2>Sab data hatao</h2><p class="mu">Pehle backup le lena. Ye wapas nahi aayega.</p>
+<button class="btn ghost" id="rs">Sab data hatao</button></div>
+</section>
+</main>
+
+<nav class="nav"><button class="on" data-v="0">Aaj</button><button data-v="1">History</button><button data-v="2">Settings</button></nav>
+<div id="bd"></div><div id="sh" role="dialog" aria-modal="true"></div><div id="ts" role="status"></div>
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)},KEY='cycle.v1',saveOk=true;
+function blank(){return {periods:[],logs:{},set:{cl:28,pl:5,pin:''}}}
+function load(){try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);return clean(o)||blank()}}catch(e){saveOk=false}return blank()}
+function clean(o){
+ if(!o||typeof o!=='object')return null;var re=/^\d{4}-\d\d-\d\d$/,r=blank();
+ (Array.isArray(o.periods)?o.periods:[]).forEach(function(p){if(p&&re.test(p.s))r.periods.push({s:p.s,e:re.test(p.e)?p.e:null})});
+ r.periods.sort(function(a,b){return a.s<b.s?-1:1});
+ var L=o.logs&&typeof o.logs==='object'?o.logs:{};
+ Object.keys(L).forEach(function(k){if(re.test(k)&&L[k]&&typeof L[k]==='object'){var x=L[k];r.logs[k]={flow:String(x.flow||''),sym:Array.isArray(x.sym)?x.sym.map(String):[],mood:String(x.mood||''),note:String(x.note||'').slice(0,500)}}});
+ var s=o.set||{};r.set.cl=Math.min(45,Math.max(20,+s.cl||28));r.set.pl=Math.min(10,Math.max(2,+s.pl||5));r.set.pin=typeof s.pin==='string'?s.pin:'';
+ return r}
+var D=load();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){saveOk=false;$('#wr').style.display='block'}}
+if(!saveOk)$('#wr').style.display='block';
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+
+var pad=function(n){return String(n).padStart(2,'0')};
+var key=function(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+var parse=function(s){var a=s.split('-').map(Number);return new Date(a[0],a[1]-1,a[2])};
+var add=function(s,n){var d=parse(s);d.setDate(d.getDate()+n);return key(d)};
+var diff=function(a,b){return Math.round((parse(a)-parse(b))/864e5)};
+var today=function(){return key(new Date())};
+var nice=function(s,y){return parse(s).toLocaleDateString('en-IN',y?{weekday:'long',day:'numeric',month:'long'}:{day:'numeric',month:'short'})};
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+function toast(m){var t=$('#ts');t.textContent=m;t.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(function(){t.style.display='none'},2600)}
+
+function stats(){
+ var st=D.periods.map(function(p){return p.s}).sort(),g=[];
+ for(var i=1;i<st.length;i++){var x=diff(st[i],st[i-1]);if(x>=15&&x<=60)g.push(x)}
+ var r=g.slice(-6),cl=r.length?Math.round(r.reduce(function(a,b){return a+b})/r.length):D.set.cl;
+ var ls=D.periods.filter(function(p){return p.e}).map(function(p){return diff(p.e,p.s)+1}).filter(function(x){return x>0&&x<15}).slice(-6);
+ var pl=ls.length?Math.round(ls.reduce(function(a,b){return a+b})/ls.length):D.set.pl;
+ return {st:st,cl:cl,pl:pl,g:g,last:st[st.length-1],hasC:r.length>0,hasP:ls.length>0}}
+function endOf(p,S){return p.e||add(p.s,S.pl-1)}
+function findP(k,S){for(var i=0;i<D.periods.length;i++){var p=D.periods[i];if(p.s<=k&&k<=endOf(p,S))return p}return null}
+function preds(S){var o=[];if(!S.last)return o;var s=S.last;for(var k=0;k<3;k++){s=add(s,S.cl);o.push({s:s,ov:add(s,-14)})}return o}
+
+var view={y:new Date().getFullYear(),m:new Date().getMonth()};
+function renderStatus(S){
+ var t=today(),h,p='',tone='';
+ if(!S.last){h='Pehli period date add karo';p='Period shuru ho to neeche button dabao. Do teen cycle ke baad prediction aur sahi hoga.'}
+ else{
+  var cur=findP(t,S);
+  if(cur){h='Period ka din '+(diff(t,cur.s)+1);tone='p';p='Shuru hui: '+nice(cur.s)}
+  else{
+   var nx=add(S.last,S.cl),d=diff(nx,t);
+   if(d>0){h='Period '+d+' din me expected';p='Expected: '+nice(nx)+(d<=3?'. Jaldi aane wali hai.':'')}
+   else if(d===0){h='Period aaj expected hai';p='Cycle ka din '+(diff(t,S.last)+1)}
+   else{h='Period '+(-d)+' din late';tone='p';p='Expected tha: '+nice(nx)}
+   var ov=add(nx,-14);
+   if(t===ov)p+='. Aaj ovulation expected hai.';
+   else if(t>=add(ov,-5)&&t<=add(ov,1))p+='. Fertile window chal rahi hai.';
+   else if(d>0)p+='. Cycle ka din '+(diff(t,S.last)+1)+'.';
+  }}
+ var btn='';
+ if(S.last&&findP(t,S))btn='<button class="btn ghost" data-open="'+t+'">Aaj ka log likho</button>';
+ else btn='<button class="btn" id="qs">Period aaj shuru hui</button><button class="btn ghost" data-open="'+t+'">Aaj ka log likho</button>';
+ var lk='';
+ if(S.last){var n=add(S.last,S.cl);if(n>=t){var a=n.replace(/-/g,''),b=add(n,1).replace(/-/g,'');
+  lk='<br><a class="lnk" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent('Period expected')+'&dates='+a+'/'+b+'&details='+encodeURIComponent('Cycle Diary reminder')+'">Next period calendar me add karo</a>'}}
+ $('#st').innerHTML='<p class="big'+(tone?' '+tone:'')+'">'+esc(h)+'</p><p class="mu">'+esc(p)+'</p><div class="row">'+btn+'</div>'+lk;
+ var q=$('#qs');if(q)q.onclick=function(){D.periods.push({s:t,e:null});D.periods.sort(function(a,b){return a.s<b.s?-1:1});save();render();toast('Period shuru ho gayi, save ho gaya')};
+}
+function renderCal(S){
+ var P=preds(S),pp={},fe={},ov={},ac={},t=today();
+ P.forEach(function(x){for(var i=0;i<S.pl;i++)pp[add(x.s,i)]=1;for(var j=-5;j<=1;j++)fe[add(x.ov,j)]=1;ov[x.ov]=1});
+ D.periods.forEach(function(p){var n=Math.min(20,diff(endOf(p,S),p.s));for(var i=0;i<=n;i++)ac[add(p.s,i)]=1});
+ var f=new Date(view.y,view.m,1);
+ $('#mt').textContent=f.toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+ $('#wk').innerHTML=['Mo','Tu','We','Th','Fr','Sa','Su'].map(function(x){return '<div class="wd">'+x+'</div>'}).join('');
+ var lead=(f.getDay()+6)%7,days=new Date(view.y,view.m+1,0).getDate(),h='';
+ for(var i=0;i<lead;i++)h+='<button class="d e" tabindex="-1" aria-hidden="true"></button>';
+ for(var d=1;d<=days;d++){
+  var k=view.y+'-'+pad(view.m+1)+'-'+pad(d),c=ac[k]?' pe':pp[k]?' pp':ov[k]?' ov':fe[k]?' fe':'';
+  if(k===t)c+=' td';
+  h+='<button class="d'+c+'" data-open="'+k+'" aria-label="'+nice(k)+'"><span>'+d+'</span>'+(D.logs[k]?'<i></i>':'')+'</button>'}
+ $('#cg').innerHTML=h}
+function renderHist(S){
+ var avg=function(a){return a.length?Math.round(a.reduce(function(x,y){return x+y})/a.length):'-'};
+ var ls=D.periods.filter(function(p){return p.e}).map(function(p){return diff(p.e,p.s)+1});
+ $('#ss').innerHTML='<div><b>'+(S.hasC?S.cl:'-')+'</b><span>Avg cycle (din)</span></div><div><b>'+(ls.length?avg(ls):'-')+'</b><span>Avg period (din)</span></div><div><b>'+D.periods.length+'</b><span>Periods log</span></div>';
+ var h='',r=D.periods.slice().reverse();
+ if(!r.length)h='<p class="mu">Abhi koi period log nahi hai. Aaj tab se shuru karo.</p>';
+ r.forEach(function(p,i){
+  var prev=r[i+1],gap=prev?diff(p.s,prev.s):0,len=p.e?diff(p.e,p.s)+1:0;
+  h+='<button class="h" data-open="'+p.s+'"><span class="t">'+nice(p.s)+(p.e?' – '+nice(p.e):' se')+'</span>'+(gap?'<span class="bar" style="width:'+Math.min(120,gap*2.4)+'px"></span><span class="mu">'+gap+' din</span>':'<span class="mu">'+(len?len+' din period':'chal rahi hai')+'</span>')+'</button>'});
+ $('#hl').innerHTML=h}
+function renderSet(){
+ $('#cl').value=D.set.cl;$('#pl').value=D.set.pl;
+ $('#pt').textContent=D.set.pin?'PIN lock chalu hai. App kholne par PIN poochega.':'PIN lock band hai. Chalu karne ke liye 4 digit PIN daalo.';
+ $('#pr').style.display=D.set.pin?'inline-block':'none'}
+function render(){var S=stats();renderStatus(S);renderCal(S);renderHist(S);renderSet()}
+
+/* day sheet */
+var sel,tmp,FL=['Light','Medium','Heavy'],SY=['Pet dard','Sir dard','Thakaan','Kamar dard','Pet phoolna','Pimples','Ulti jaisa'],MD=['Khush','Theek','Udaas','Chidchida','Anxious'];
+function chip(t,v){var on=t==='sym'?tmp.sym.indexOf(v)>-1:tmp[t]===v;return '<button class="chip'+(on?' on':'')+'" data-t="'+t+'" data-v="'+v+'">'+v+'</button>'}
+function openDay(k){
+ sel=k;var L=D.logs[k]||{};tmp={flow:L.flow||'',sym:(L.sym||[]).slice(),mood:L.mood||'',note:L.note||''};
+ var S=stats(),cur=findP(k,S),pa='';
+ if(cur)pa='<button class="btn" id="pe">Yahan period khatam</button><button class="btn ghost" id="pd">Ye period hatao</button>';
+ else if(k<=today())pa='<button class="btn" id="ps">Is din se period shuru</button>';
+ $('#sh').innerHTML='<h2>'+esc(nice(k,true))+'</h2><div class="row">'+pa+'</div>'
+  +'<p class="lb">Flow</p><div class="chips">'+FL.map(function(x){return chip('flow',x)}).join('')+'</div>'
+  +'<p class="lb">Symptoms</p><div class="chips">'+SY.map(function(x){return chip('sym',x)}).join('')+'</div>'
+  +'<p class="lb">Mood</p><div class="chips">'+MD.map(function(x){return chip('mood',x)}).join('')+'</div>'
+  +'<p class="lb">Note</p><textarea id="nt" maxlength="500">'+esc(tmp.note)+'</textarea>'
+  +'<div class="row"><button class="btn" id="sv">Save karo</button><button class="btn ghost" id="cx">Band karo</button></div>';
+ $('#bd').style.display='block';$('#sh').style.display='block';
+ $('#sh').querySelectorAll('.chip').forEach(function(b){b.onclick=function(){
+  var t=b.dataset.t,v=b.dataset.v;
+  if(t==='sym'){var i=tmp.sym.indexOf(v);if(i>-1)tmp.sym.splice(i,1);else tmp.sym.push(v);b.classList.toggle('on')}
+  else{var was=tmp[t]===v;tmp[t]=was?'':v;$('#sh').querySelectorAll('.chip[data-t="'+t+'"]').forEach(function(c){c.classList.remove('on')});if(!was)b.classList.add('on')}}});
+ $('#cx').onclick=closeDay;
+ $('#sv').onclick=function(){
+  tmp.note=$('#nt').value.trim();
+  if(tmp.flow||tmp.sym.length||tmp.mood||tmp.note)D.logs[sel]={flow:tmp.flow,sym:tmp.sym,mood:tmp.mood,note:tmp.note};else delete D.logs[sel];
+  save();closeDay();render();toast('Save ho gaya')};
+ var ps=$('#ps');if(ps)ps.onclick=function(){D.periods.push({s:sel,e:null});D.periods.sort(function(a,b){return a.s<b.s?-1:1});save();closeDay();render();toast('Period shuru save ho gayi')};
+ var pe=$('#pe');if(pe)pe.onclick=function(){var p=findP(sel,stats());if(p&&sel>=p.s){p.e=sel;save();closeDay();render();toast('Period khatam save ho gayi')}};
+ var pd=$('#pd');if(pd)pd.onclick=function(){
+  if(!pd.dataset.s){pd.dataset.s=1;pd.textContent='Pakka hatao?';return}
+  var p=findP(sel,stats());D.periods=D.periods.filter(function(x){return x!==p});save();closeDay();render();toast('Period hata di')}}
+function closeDay(){$('#bd').style.display='none';$('#sh').style.display='none'}
+$('#bd').onclick=closeDay;
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDay()});
+document.addEventListener('click',function(e){var b=e.target.closest('[data-open]');if(b)openDay(b.dataset.open)});
+
+/* nav */
+document.querySelectorAll('.nav button').forEach(function(b){b.onclick=function(){
+ document.querySelectorAll('.nav button').forEach(function(x){x.classList.toggle('on',x===b)});
+ document.querySelectorAll('.view').forEach(function(v,i){v.classList.toggle('on',String(i)===b.dataset.v)});window.scrollTo(0,0)}});
+$('#pv').onclick=function(){view.m--;if(view.m<0){view.m=11;view.y--}renderCal(stats())};
+$('#nx').onclick=function(){view.m++;if(view.m>11){view.m=0;view.y++}renderCal(stats())};
+
+/* settings */
+$('#cl').onchange=function(){D.set.cl=Math.min(45,Math.max(20,+this.value||28));save();render()};
+$('#pl').onchange=function(){D.set.pl=Math.min(10,Math.max(2,+this.value||5));save();render()};
+async function hash(s){try{var b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('cy'+s));return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0')}).join('')}catch(e){return 'p'+s}}
+$('#ps2').onclick=async function(){var v=$('#np').value;if(!/^\d{4}$/.test(v)){toast('PIN 4 digit ka hona chahiye');return}D.set.pin=await hash(v);save();$('#np').value='';renderSet();toast('PIN set ho gaya')};
+$('#pr').onclick=function(){D.set.pin='';save();renderSet();toast('PIN hata diya')};
+$('#pin').oninput=async function(){if(this.value.length===4){if(await hash(this.value)===D.set.pin){$('#lock').style.display='none';this.value='';$('#pm').textContent=''}else{$('#pm').textContent='PIN galat hai';this.value=''}}};
+if(D.set.pin){$('#lock').style.display='flex'}
+
+/* backup */
+function dump(){return JSON.stringify({app:'cycle-diary',v:1,saved:new Date().toISOString(),data:D},null,1)}
+$('#bd1').onclick=async function(){
+ var data=dump(),name='cycle-diary-backup.json';$('#bk').value=data;
+ try{var dl=window.claude&&claude.use?await claude.use('downloads'):null;
+  if(dl){await dl.save({filename:name,data:data});toast('Backup file save ho gayi');return}}catch(e){if(e&&e.code==='declined')return}
+ try{var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type:'application/json'}));a.download=name;document.body.appendChild(a);a.click();a.remove();toast('Backup file download ho rahi hai')}
+ catch(e){toast('File save nahi hui. Neeche ka text copy kar lo.')}};
+$('#bc').onclick=async function(){
+ var data=dump();$('#bk').value=data;
+ try{await navigator.clipboard.writeText(data);toast('Backup text copy ho gaya')}catch(e){$('#bk').select();toast('Text select hai, copy kar lo')}};
+function restore(txt){
+ try{var o=JSON.parse(txt),n=clean(o&&o.data?o.data:o);if(!n)throw 0;
+  try{localStorage.setItem(KEY+'.prev',JSON.stringify(D))}catch(e){}
+  D=n;save();render();toast('Restore ho gaya: '+D.periods.length+' periods')}
+ catch(e){toast('Ye valid backup nahi lag raha')}}
+$('#rt').onclick=function(){restore($('#bk').value)};
+$('#rf').onclick=function(){$('#fi').click()};
+$('#fi').onchange=function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){restore(String(r.result))};r.readAsText(f);this.value=''};
+$('#rs').onclick=function(){var b=this;
+ if(!b.dataset.s){b.dataset.s=1;b.textContent='Pakka hatao? Dobara tap karo';return}
+ try{localStorage.setItem(KEY+'.prev',JSON.stringify(D))}catch(e){}
+ D=blank();save();delete b.dataset.s;b.textContent='Sab data hatao';render();toast('Sab data hata diya')};
+
+render();
+})();
+</script>
+</body>
+</html>
